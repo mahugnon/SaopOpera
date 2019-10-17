@@ -15,22 +15,20 @@ SoapHttpConnector class >> transportName [
 ]
 
 { #category : #actions }
-SoapHttpConnector >> send: aSoapEnvelope to: anSoapTcpLocator with: aSoapContext [ 
+SoapHttpConnector >> send: aSoapEnvelope to: anSoapTcpLocator with: aSoapContext [
 	"return aSoapMessage or nil"
+
 	| page soapClient envBuilder rawString returnEnvelope message client |
-	
 	client := ZnClient new.
-	client url: ('http://' , anSoapTcpLocator host, aSoapContext targetObjectURI);
+	client
+		url: 'http://' , anSoapTcpLocator host , ':' , anSoapTcpLocator port printString , aSoapContext targetObjectURI;
 		contents: aSoapEnvelope printXmlString;
 		contentType: 'text/xml';
 		post.
-	
-	rawString := client response entity contents. 
- 
-	1halt.
- 
-	returnEnvelope :=  self envelopeBuilder buildSoapEnvelopeFromXmlString: rawString.
+	rawString := client response entity contents.
+	returnEnvelope := self envelopeBuilder
+		buildSoapEnvelopeFromXmlString: rawString.
 	message := SoapMessage envelope: returnEnvelope.
 	self debugReturn: message.
-	^message
+	^ message
 ]

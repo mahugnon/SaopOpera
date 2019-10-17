@@ -53,7 +53,7 @@ SoapDecoder class >> useXsiNullAttribute: aBoolean [
 { #category : #private }
 SoapDecoder >> basicDecodeXmlElement: aSoapWrapElement [ 
 	| value |
-	aSoapWrapElement href ifNotNilDo: [:href | value := self referenceDict at: href ifAbsent:[].
+	aSoapWrapElement href ifNotNil: [:href | value := self referenceDict at: href ifAbsent:[].
 		value ifNil: [^self referenceDict at: href put: (SoapHref on: href in: self referenceDict)].
 		^value.
 	].
@@ -89,5 +89,6 @@ SoapDecoder >> isArrayType: aSoapWrapElement [
 
 { #category : #private }
 SoapDecoder >> remember: object ifExistsId: aSoapXmlElement [
-	aSoapXmlElement id ifNotNilDo: [:identifier | self referenceDict at: identifier put: object]
+	aSoapXmlElement id
+		ifNotNil: [ :identifier | self referenceDict at: identifier put: object ]
 ]

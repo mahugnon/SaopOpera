@@ -326,7 +326,7 @@ SoapCall >> useColocation [
 ]
 
 { #category : #accessing }
-SoapCall >> useColocation: aBoolean [.
+SoapCall >> useColocation: aBoolean. [
 	aBoolean ifTrue: [self connector: nil].
 	useColocation := aBoolean 
 ]
